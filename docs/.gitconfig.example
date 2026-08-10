@@ -1,0 +1,19 @@
+# This is a TEMPLATE. Copy to ~/.gitconfig and fill in your own identity.
+# Not installed automatically (identity is per-machine/personal).
+[user]
+	name = Your Name
+	email = you@example.com
+
+[init]
+	defaultBranch = main
+
+[core]
+	# optional niceties
+	# editor = nvim
+# 	excludesfile = ~/.gitignore_global
+
+# [alias]
+# 	st = status
+# 	co = checkout
+# 	br = branch
+# 	lg = log --oneline --graph --decorate -20

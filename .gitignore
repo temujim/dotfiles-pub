@@ -1,0 +1,17 @@
+# OS junk
+.DS_Store
+*.swp
+*~
+
+# Backups, scratch, secrets (defensive — should never be committed)
+.bak-*
+.bak_*
+*.env
+.env*
+auth.json
+*.pem
+.credentials*
+state.db
+
+# Build/OS metadata (not used here, but harmless to ignore)
+__pycache__/

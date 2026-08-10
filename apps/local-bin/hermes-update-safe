@@ -1,0 +1,137 @@
+#!/usr/bin/env bash
+# local patch 2026-07-31: update the committed Titan Agentic Workflow
+# branch safely.  This replaces upstream's source-stash workflow, which cannot
+# preserve a local commit when the production branch must fast-forward/reset.
+#
+# Invariants:
+#   * production checkout is always current origin/main + one local TAW commit
+#   * a clean source tree is required; use git status and commit/revert first
+#   * a portable bundle + patch are written before any mutation
+#   * after update the TAW commit is cherry-picked, compiled, then acceptance
+#     tested with a temporary HERMES_HOME before the launcher is switched
+set -euo pipefail
+export LC_ALL=C
+
+REPO="$HOME/.hermes/hermes-agent"
+PORT_BRANCH="local-taw-port-20260731"
+PRODUCTION_BRANCH="main"
+ARCHIVE_SCRIPT="$HOME/local-patches/capture-patches.sh"
+TARGETED_TESTS=(
+  tests/cli/test_taw_customizations.py
+  tests/cli/test_cli_status_bar.py
+  tests/cli/test_cli_init.py::TestHistoryDisplay
+)
+
+cd "$REPO"
+
+if [[ -n "$(git status --porcelain)" ]]; then
+  echo "ABORT: production checkout has uncommitted changes."
+  echo "Inspect with: cd $REPO && git status"
+  echo "Do not update until the changes are committed, reverted, or deliberately archived."
+  exit 1
+fi
+if ! git show-ref --verify --quiet "refs/heads/$PORT_BRANCH"; then
+  echo "ABORT: missing local TAW port branch $PORT_BRANCH."
+  echo "Recovery: git fetch origin; then restore from ~/local-patches/latest.bundle."
+  exit 1
+fi
+
+PORT_COMMIT="$(git rev-parse "$PORT_BRANCH")"
+PORT_BASE="$(git rev-parse "$PORT_COMMIT^")"
+if ! git merge-base --is-ancestor "$PORT_BASE" "$PORT_COMMIT"; then
+  echo "ABORT: invalid TAW port commit ancestry."
+  exit 1
+fi
+
+# The port's parent must be an ancestor of upstream; otherwise upstream was
+# rewritten so substantially that a mechanical replay would be unsafe.
+git fetch --prune origin main
+UPSTREAM="$(git rev-parse origin/main)"
+if ! git merge-base --is-ancestor "$PORT_BASE" "$UPSTREAM"; then
+  echo "ABORT: upstream history no longer contains the TAW port base."
+  echo "Manual migration required. Your committed port remains at $PORT_COMMIT."
+  exit 1
+fi
+
+# No new upstream commit: verify the deployed transaction without attempting
+# to cherry-pick the same local commit onto itself.
+if [[ "$UPSTREAM" == "$PORT_BASE" && "$(git rev-parse HEAD)" == "$PORT_COMMIT" ]]; then
+  echo "Already current: deployed TAW port $PORT_COMMIT is based on origin/main."
+  exit 0
+fi
+
+echo "== 1/5 archive committed TAW recovery artifacts =="
+bash "$ARCHIVE_SCRIPT" pre-update
+
+echo
+echo "== 2/5 stage current upstream in an isolated worktree =="
+TMP_ROOT="$(mktemp -d -t local-taw-update)"
+STAGE="$TMP_ROOT/stage"
+cleanup() {
+  git -C "$REPO" worktree remove --force "$STAGE" >/dev/null 2>&1 || true
+  rm -rf "$TMP_ROOT"
+}
+trap cleanup EXIT
+git worktree add --detach "$STAGE" "$UPSTREAM" >/dev/null
+
+# Apply the committed port to the staged upstream. Any conflict leaves the
+# running production checkout untouched and the archive/bundle intact.
+if ! git -C "$STAGE" cherry-pick "$PORT_COMMIT"; then
+  echo "ABORT: TAW port no longer applies cleanly to upstream."
+  echo "Production checkout has NOT been changed. Inspect: $STAGE"
+  echo "Recoverable port commit: $PORT_COMMIT"
+  exit 1
+fi
+
+echo
+echo "== 3/5 compile and acceptance-test the staged candidate =="
+PYTHONPATH="$STAGE" "$REPO/venv/bin/python" -m py_compile \
+  "$STAGE/cli.py" "$STAGE/hermes_cli/commands.py" \
+  "$STAGE/hermes_cli/config.py" "$STAGE/hermes_cli/config_defaults.py" \
+  "$STAGE/hermes_cli/skin_engine.py" "$STAGE/tools/mcp_tool.py"
+TEST_HOME="$TMP_ROOT/hermes-home"
+mkdir -p "$TEST_HOME/skins"
+printf 'display:\n  skin: default\n  show_cost: false\n' > "$TEST_HOME/config.yaml"
+(
+  cd "$STAGE"
+  PYTHONPATH="$STAGE" HERMES_HOME="$TEST_HOME" "$REPO/venv/bin/python" -m pytest \
+    "${TARGETED_TESTS[@]}" -q -o 'addopts=' -p no:cacheprovider
+)
+git -C "$STAGE" diff --check HEAD^
+
+echo
+echo "== 4/5 atomically advance production to tested candidate =="
+# Do not run upstream `hermes update`: it would reset/ff the production tree
+# before the local commit can be semantically tested.  This checkout-level
+# transaction uses the exact tested staged commit instead.
+git reset --hard "$(git -C "$STAGE" rev-parse HEAD)"
+# `main` is the checked-out production branch, so reset moves it directly.
+# Keep PORT_BRANCH as the immutable, tested patch template; it may be checked
+# out in the retained port worktree and must not be force-moved underneath it.
+
+# Editable installs use the repo path, but refresh dependencies after source
+# changes just as an upstream update would. Do it only after candidate tests.
+if command -v uv >/dev/null 2>&1; then
+  VIRTUAL_ENV="$REPO/venv" uv pip install --python "$REPO/venv/bin/python" -e "$REPO" >/dev/null
+else
+  "$REPO/venv/bin/python" -m pip install -e "$REPO" >/dev/null
+fi
+
+echo
+echo "== 5/5 final production verification + archival =="
+"$REPO/venv/bin/python" -m py_compile \
+  cli.py hermes_cli/commands.py hermes_cli/config.py hermes_cli/config_defaults.py \
+  hermes_cli/skin_engine.py tools/mcp_tool.py
+(
+  FINAL_HOME="$TMP_ROOT/final-home"
+  mkdir -p "$FINAL_HOME/skins"
+  printf 'display:\n  skin: default\n  show_cost: false\n' > "$FINAL_HOME/config.yaml"
+  HERMES_HOME="$FINAL_HOME" "$REPO/venv/bin/python" -m pytest \
+    "${TARGETED_TESTS[@]}" -q -o 'addopts=' -p no:cacheprovider
+)
+git diff --check
+git status --short
+bash "$ARCHIVE_SCRIPT" post-update
+
+echo "OK: TAW retained at $(git rev-parse --short HEAD) on upstream $(git rev-parse --short "$UPSTREAM")."
+echo "Restart Hermes CLI/gateway processes to load the new code."

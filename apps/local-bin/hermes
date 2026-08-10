@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Hermes launcher (points at the Hermes checkout venv). @HOME@ is substituted
+# by install.sh to the target account's home directory.
+unset PYTHONPATH
+unset PYTHONHOME
+exec "@HOME@/.hermes/hermes-agent/venv/bin/hermes" "$@"

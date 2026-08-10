@@ -1,0 +1,21 @@
+#!/bin/bash
+# fonttoggle - shrink Terminal.app font to a small size, run again to restore.
+# State (your normal size) is remembered in ~/.terminal-font-prev.
+PROFILE="Basic"
+SMALL=8
+STATE=~/.terminal-font-prev
+
+cur=$(osascript -e "tell application \"Terminal\" to get font size of settings set \"$PROFILE\"" | cut -d. -f1)
+
+if [ "$cur" -le "$SMALL" ]; then
+  # currently small -> restore
+  if [ -f "$STATE" ]; then prev=$(cat "$STATE"); else prev=10; fi
+  osascript -e "tell application \"Terminal\" to set font size of settings set \"$PROFILE\" to $prev" >/dev/null
+  rm -f "$STATE"
+  echo "Terminal font restored to $prev"
+else
+  # currently normal -> go small
+  echo "$cur" > "$STATE"
+  osascript -e "tell application \"Terminal\" to set font size of settings set \"$PROFILE\" to $SMALL" >/dev/null
+  echo "Terminal font shrunk to $SMALL (run fonttoggle again to restore $cur)"
+fi

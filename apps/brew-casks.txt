@@ -1,0 +1,9 @@
+alt-tab
+amitv87-pip
+dozer
+easy-move+resize
+easy-move-plus-resize
+font-hack-nerd-font
+fuse-t
+gimp
+powershell
