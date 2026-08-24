@@ -69,6 +69,14 @@ never route profile captures to PrivateVault).
 3. Launch once + sign in (credentials are NOT in this repo).
 4. Verify: `claude --version`; `~/.claude` settings show editorMode vim.
 
+## 4b. Yazi (file manager)
+1. Shadow-install the yazi release binary → `~/.local/bin/yazi` (Homebrew perms
+   block `brew install`; see TAW / scripts).
+2. install.sh writes yazi/keymap.toml + theme.toml → ~/.config/yazi/.
+3. The `y`/`yy` zsh wrapper (already in home/.zshrc) makes quitting cd the shell.
+4. Verify: `y /tmp`, press `!` → shell at /tmp; `exit` → back in yazi. Theme
+   renders all-white regardless of terminal dark/light mode.
+
 ## 5. Hermes / agents (optional, outside the tmux/nvim/terminal scope)
 Hermes checkout, venv, profile homes and all provider keys/skin state are per
 machine and NOT in this repo (secrets!). Recreate config per the TAW §7 runbook;

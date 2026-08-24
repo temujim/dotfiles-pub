@@ -18,6 +18,12 @@ Every file in this repo, where it was captured from on the source Mac
 | init.lua | ~/.config/nvim/init.lua |
 | lazy-lock.json | ~/.config/nvim/lazy-lock.json |
 
+## yazi/ → ~/.config/yazi/
+| Repo file | Source | Notes |
+|-----------|--------|-------|
+| keymap.toml | ~/.config/yazi/keymap.toml | binds `!` → interactive $SHELL in CWD (ranger `S` equivalent) |
+| theme.toml | ~/.config/yazi/theme.toml | all-white: built-in light palette, `app.overall.bg = "white"` forced so it renders white regardless of terminal mode |
+
 ## tmux/
 | Repo file | Source | Install target | Why re-copied |
 |-----------|--------|----------------|---------------|

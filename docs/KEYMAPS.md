@@ -104,6 +104,25 @@ apps/claude/keybindings.json — kept verbatim.)
 
 ---
 
+## YAZI  (file manager; v26.5.6 @ ~/.local/bin/yazi)
+Source: yazi/keymap.toml + yazi/theme.toml
+
+| Keys | Action |
+|------|--------|
+| `!` | drop into an interactive $SHELL in the current directory (ranger `S` equivalent); `exit`/Ctrl-D returns to yazi |
+| `c c` / `c d` / `c f` | copy full path / directory / file name to clipboard |
+| `;` / `:` | run a shell command (interactive / block-until-finished) |
+| `y` / `x` / `p` | yank-copy / yank-cut / paste |
+| `d` / `D` | trash / permanent delete (the #1 gotcha) |
+| `f` / `s` / `S` | filter / search-by-name (fd) / search-by-content (rg) |
+| `~` (or F1) | in-app help (filter with `f`) |
+
+Launch via the `y`/`yy` shell wrapper in `.zshrc` so quitting (`q`) cd's the parent
+shell into yazi's last directory (`yazi --cwd-file`). Theme = all-white (built-in
+light palette forced white regardless of terminal mode).
+
+---
+
 ## Excluded on purpose
 THE macOS KEYBOARD REMAPPING layer (hidutil / ByHost modifier map /
 leftcmd-backspace LaunchAgent / Caps→Esc) is intentionally NOT in this repo —

@@ -1,0 +1,8 @@
+# ~/.config/yazi/keymap.toml
+# Dropping to shell in CWD (ranger 'S' equivalent)
+
+[[mgr.prepend_keymap]]
+on   = "!"
+for  = "unix"
+run  = 'shell "$SHELL" --block'
+desc = "Open $SHELL here"

@@ -68,6 +68,14 @@ for f in init.lua lazy-lock.json; do
   if [[ "$DRY" -eq 1 ]]; then say "would install nvim/$f -> $dst"; else install_file "$src" "$dst"; fi
 done
 
+# ---- 2b. yazi (keymap + all-white light theme) ----
+note "--- yazi config (keymap + theme) ---"
+for f in keymap.toml theme.toml; do
+  src="$REPO_DIR/yazi/$f"; dst="$TARGET_HOME/.config/yazi/$f"
+  [[ -f "$src" ]] || continue
+  if [[ "$DRY" -eq 1 ]]; then say "would install yazi/$f -> $dst"; else install_file "$src" "$dst"; fi
+done
+
 # ---- 3. local-bin launchers (@HOME@ -> target home) ----
 note "--- ~/.local/bin launchers (rewrites @HOME@) ---"
 mkdir -p "$TARGET_HOME/.local/bin"
