@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dimidium — Colorscheme</title>
+  <style>
+    :root {
+      --bg: #141414;
+      --panel: #1E1E1E;
+      --fg: #BAB7B6;
+      --muted: #817E7E;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 3rem 1.5rem;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, monospace;
+      line-height: 1.5;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    header { margin-bottom: 2.5rem; }
+    h1 { margin: 0; font-size: 2rem; color: #688DFD; letter-spacing: 0.5px; }
+    .sub { color: var(--muted); margin-top: 0.4rem; }
+    h2 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin: 2.5rem 0 1rem;
+      border-bottom: 1px solid #2a2a2a;
+      padding-bottom: 0.5rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+    .swatch {
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+    .chip {
+      width: 38px; height: 38px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
+    }
+    .meta { min-width: 0; }
+    .name { font-size: 0.9rem; }
+    .hex { color: var(--muted); font-size: 0.78rem; text-transform: uppercase; }
+
+    /* File-type preview, mimicking a Yazi file listing */
+    .files {
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: 0.95rem;
+    }
+    .files .row { padding: 0.15rem 0; white-space: nowrap; overflow-x: auto; }
+    .files .icon { display: inline-block; width: 1.5rem; }
+    .orphan { background: #CF494C; color: #fff; padding: 0 2px; border-radius: 2px; }
+    footer { margin-top: 3rem; color: var(--muted); font-size: 0.8rem; }
+    a { color: #32E0FB; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Dimidium</h1>
+      <div class="sub">A flavor for <a href="https://github.com/sxyazi/yazi">Yazi</a> — palette overview</div>
+    </header>
+
+    <h2>Accents</h2>
+    <div class="grid" id="accents"></div>
+
+    <h2>UI &amp; Status</h2>
+    <div class="grid" id="ui"></div>
+
+    <h2>File type colors (as seen in Yazi)</h2>
+    <div class="files">
+      <div class="row"><span class="icon" style="color:#688DFD"></span><span style="color:#688DFD">folders/</span></div>
+      <div class="row"><span class="icon" style="color:#DB9C11"></span><span style="color:#DB9C11">photo.png</span></div>
+      <div class="row"><span class="icon" style="color:#AF5ED2"></span><span style="color:#AF5ED2">song.mp3</span></div>
+      <div class="row"><span class="icon" style="color:#CF494C"></span><span style="color:#CF494C">archive.zip</span></div>
+      <div class="row"><span class="icon" style="color:#1DB6BB"></span><span style="color:#1DB6BB">report.pdf</span></div>
+      <div class="row"><span class="icon" style="color:#60B442"></span><span style="color:#60B442">script.sh</span></div>
+      <div class="row"><span class="icon" style="color:#5286DD"></span><span style="color:#5286DD">link-to-html</span> <span style="color:#5286DD;font-style:italic"> colorscheme.html</span></div>
+      <div class="row"><span class="icon"></span><span class="orphan">orphan-link</span> <span style="color:#817E7E;font-style:italic"> nowhere</span></div>
+    </div>
+
+    <footer>
+      Dimidium flavor · MIT licensed · generated palette reference
+    </footer>
+  </div>
+
+  <script>
+    const accents = [
+      ["Cyan",    "#32E0FB"],
+      ["Blue",    "#688DFD"],
+      ["Sky",     "#5286DD"],
+      ["Green",   "#37E57B"],
+      ["Yellow",  "#FCCD1A"],
+      ["Orange",  "#FF643B"],
+      ["Magenta", "#ED6FE9"],
+      ["Purple",  "#AF5ED2"],
+    ];
+    const ui = [
+      ["Background",   "#141414"],
+      ["Panel",        "#1E1E1E"],
+      ["Foreground",   "#BAB7B6"],
+      ["Muted",        "#817E7E"],
+      ["Exec / OK",    "#60B442"],
+      ["Read",         "#DB9C11"],
+      ["Write / Error","#CF494C"],
+      ["Exec perm",    "#1DB6BB"],
+    ];
+    const render = (id, list) => {
+      document.getElementById(id).innerHTML = list.map(([name, hex]) => `
+        <div class="swatch">
+          <div class="chip" style="background:${hex}"></div>
+          <div class="meta">
+            <div class="name">${name}</div>
+            <div class="hex">${hex}</div>
+          </div>
+        </div>`).join("");
+    };
+    render("accents", accents);
+    render("ui", ui);
+  </script>
+</body>
+</html>

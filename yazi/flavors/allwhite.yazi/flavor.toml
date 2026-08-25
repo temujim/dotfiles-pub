@@ -1,0 +1,18 @@
+# Flavor: allwhite
+# ---------------------------------------------------------
+# Your custom "make everything legible" theme.
+# Renders every file AND directory name in bright white, dropping
+# yazi's type color-coding. All other UI components (status bar,
+# borders, mode badges, etc.) keep yazi's defaults.
+#
+# To use: in ~/.config/yazi/theme.toml set:
+#   [flavor]
+#   dark  = "allwhite"
+#   light = "allwhite"
+# ---------------------------------------------------------
+
+[filetype]
+rules = [
+	{ url = "*",  fg = "white" },   # all regular files
+	{ url = "*/", fg = "white" },   # all directories
+]

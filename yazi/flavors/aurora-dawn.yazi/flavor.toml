@@ -1,0 +1,240 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# Aurora Dawn — warm golden morning with nature-inspired accents
+#
+# Palette:
+#   bg_deep:    #faf5ef    bg:         #f0e8e0    surface:    #e4dbd2
+#   overlay:    #d5ccc3    highlight:  #c6bcb2    border:     #b5aba0
+#   fg:         #3a3530    fg_bright:  #2a2522    fg_dim:     #7a736b    fg_muted:   #9e9894
+#   blue:       #2868a0    teal:       #28857a    green:      #388a3e
+#   rose:       #b84e65    amber:      #b07530    red:        #c03848
+#   cyan:       #288590    peach:      #b86840
+
+# : Overall {{
+
+[app]
+overall = { bg = "#faf5ef" }
+
+# : }}
+
+# : Manager {{
+
+[mgr]
+cwd = { fg = "#28857a", bold = true }
+
+find_keyword  = { fg = "#b07530", bold = true, italic = true, underline = true }
+find_position = { fg = "#b84e65", bg = "reset", bold = true, italic = true }
+
+marker_copied   = { fg = "#388a3e", bg = "#388a3e" }
+marker_cut      = { fg = "#c03848", bg = "#c03848" }
+marker_marked   = { fg = "#28857a", bg = "#28857a" }
+marker_selected = { fg = "#b07530", bg = "#b07530" }
+
+count_copied   = { fg = "#faf5ef", bg = "#388a3e" }
+count_cut      = { fg = "#faf5ef", bg = "#c03848" }
+count_selected = { fg = "#faf5ef", bg = "#b07530" }
+
+border_symbol = "│"
+border_style  = { fg = "#c6bcb2" }
+
+# : }}
+
+# : Indicator {{
+
+[indicator]
+parent  = { fg = "#9e9894", bg = "#f0e8e0" }
+current = { fg = "#faf5ef", bg = "#2868a0", bold = true }
+preview = { fg = "#b5aba0", bg = "#f0e8e0" }
+padding = { open = " ", close = "" }
+
+# : }}
+
+# : Tabs {{
+
+[tabs]
+active   = { fg = "#faf5ef", bg = "#2868a0", bold = true }
+inactive = { fg = "#9e9894", bg = "#e4dbd2" }
+
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+# : }}
+
+# : Mode {{
+
+[mode]
+normal_main = { fg = "#faf5ef", bg = "#2868a0", bold = true }
+normal_alt  = { fg = "#2868a0", bg = "#f0e8e0" }
+
+select_main = { fg = "#faf5ef", bg = "#388a3e", bold = true }
+select_alt  = { fg = "#388a3e", bg = "#f0e8e0" }
+
+unset_main = { fg = "#faf5ef", bg = "#b07530", bold = true }
+unset_alt  = { fg = "#b07530", bg = "#f0e8e0" }
+
+# : }}
+
+# : Status bar {{
+
+[status]
+overall = { fg = "#3a3530", bg = "#f0e8e0" }
+
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+perm_sep   = { fg = "#c6bcb2" }
+perm_type  = { fg = "#2868a0" }
+perm_read  = { fg = "#b07530" }
+perm_write = { fg = "#c03848" }
+perm_exec  = { fg = "#388a3e" }
+
+progress_label  = { fg = "#2a2522", bold = true }
+progress_normal = { fg = "#faf5ef", bg = "#2868a0" }
+progress_error  = { fg = "#faf5ef", bg = "#c03848" }
+
+# : }}
+
+# : Confirm {{
+
+[confirm]
+border    = { fg = "#2868a0" }
+title     = { fg = "#2868a0" }
+body      = { fg = "#3a3530" }
+list      = { fg = "#3a3530" }
+btn_yes   = { fg = "#faf5ef", bg = "#388a3e", bold = true }
+btn_no    = { fg = "#faf5ef", bg = "#c03848", bold = true }
+btn_labels = ["  Yes  ", "  No  "]
+
+# : }}
+
+# : Spotter {{
+
+[spot]
+border   = { fg = "#2868a0" }
+title    = { fg = "#2868a0" }
+tbl_col  = { fg = "#28857a", bold = true }
+tbl_cell = { fg = "#b84e65", bg = "#e4dbd2" }
+
+# : }}
+
+# : Pick {{
+
+[pick]
+border   = { fg = "#2868a0" }
+active   = { fg = "#b84e65", bold = true }
+inactive = {}
+
+# : }}
+
+# : Input {{
+
+[input]
+border   = { fg = "#2868a0" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+# : }}
+
+# : Completion {{
+
+[cmp]
+border   = { fg = "#2868a0" }
+active   = { fg = "#faf5ef", bg = "#2868a0" }
+inactive = {}
+
+# : }}
+
+# : Tasks {{
+
+[tasks]
+border  = { fg = "#2868a0" }
+title   = {}
+hovered = { fg = "#b84e65", bold = true }
+
+# : }}
+
+# : Which {{
+
+[which]
+cols            = 3
+mask            = { bg = "#f0e8e0" }
+cand            = { fg = "#28857a" }
+rest            = { fg = "#9e9894" }
+desc            = { fg = "#b84e65" }
+separator       = "    "
+separator_style = { fg = "#d5ccc3" }
+
+# : }}
+
+# : Help {{
+
+[help]
+on      = { fg = "#28857a" }
+run     = { fg = "#b84e65" }
+desc    = { fg = "#7a736b" }
+hovered = { reversed = true, bold = true }
+footer  = { fg = "#f0e8e0", bg = "#3a3530" }
+
+# : }}
+
+# : Notification {{
+
+[notify]
+title_info  = { fg = "#388a3e" }
+title_warn  = { fg = "#b07530" }
+title_error = { fg = "#c03848" }
+
+# : }}
+
+# : File-specific styles {{
+
+[filetype]
+rules = [
+  { mime = "image/*",                                                                                    fg = "#288590" },
+  { mime = "{audio,video}/*",                                                                          fg = "#b07530" },
+  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#b86840" },
+  { mime = "application/{pdf,doc,rtf,docx,odt}",                                                      fg = "#388a3e" },
+  { mime = "vfs/{absent,stale}",                                                                       fg = "#9e9894" },
+  { url = "*",  fg = "#3a3530" },
+  { url = "*/", fg = "#2868a0" },
+]
+
+# : }}
+
+# : Icons {{
+
+[icon]
+dirs = [
+  { name = ".config",     text = "", fg = "#e28b9e" },
+  { name = ".git",        text = "", fg = "#5abfb5" },
+  { name = ".github",     text = "", fg = "#6fa3e8" },
+  { name = ".npm",        text = "", fg = "#6fa3e8" },
+  { name = ".vscode",     text = "", fg = "#6fa3e8" },
+  { name = "Desktop",     text = "", fg = "#5abfb5" },
+  { name = "Development", text = "", fg = "#5abfb5" },
+  { name = "Documents",   text = "󱔗", fg = "#5abfb5" },
+  { name = "Downloads",   text = "", fg = "#5abfb5" },
+  { name = "Library",     text = "", fg = "#5abfb5" },
+  { name = "Movies",      text = "󰷝", fg = "#5abfb5" },
+  { name = "Music",       text = "", fg = "#5abfb5" },
+  { name = "Pictures",    text = "", fg = "#5abfb5" },
+  { name = "Public",      text = "", fg = "#5abfb5" },
+  { name = "Videos",      text = "", fg = "#5abfb5" },
+]
+
+conds = [
+  { if = "orphan", text = "", fg = "#c8d0ea" },
+  { if = "link",   text = "", fg = "#8288a8" },
+  { if = "block",  text = "", fg = "#d49872" },
+  { if = "char",   text = "", fg = "#d49872" },
+  { if = "fifo",   text = "", fg = "#d49872" },
+  { if = "sock",   text = "", fg = "#d49872" },
+  { if = "sticky", text = "", fg = "#d49872" },
+  { if = "dummy",  text = "", fg = "#db6472" },
+  { if = "dir",    text = "", fg = "#6fa3e8" },
+  { if = "exec",   text = "", fg = "#84c48a" },
+  { if = "!dir",   text = "", fg = "#c8d0ea" },
+]
+
+# : }}

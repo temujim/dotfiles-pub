@@ -1,0 +1,245 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# Aurora Storm — deep twilight with aurora-inspired accents
+#
+# Palette:
+#   bg_deep:    #161920    bg:         #1a1b2c    surface:    #222336
+#   overlay:    #2e3047    highlight:  #404263    border:     #505370
+#   fg:         #c8d0ea    fg_bright:  #e2e7fa    fg_dim:     #8288a8    fg_muted:   #5c6180
+#   blue:       #6fa3e8    teal:       #5abfb5    green:      #84c48a
+#   rose:       #e28b9e    amber:      #d4a55a    red:        #db6472
+#   cyan:       #62c5cc    peach:      #d49872
+
+# : Overall {{
+
+[app]
+overall = { bg = "#161920" }
+
+# : }}
+
+# : Manager {{
+
+[mgr]
+cwd = { fg = "#5abfb5", bold = true }
+
+find_keyword  = { fg = "#d4a55a", bold = true, italic = true, underline = true }
+find_position = { fg = "#e28b9e", bg = "reset", bold = true, italic = true }
+
+marker_copied   = { fg = "#84c48a", bg = "#84c48a" }
+marker_cut      = { fg = "#db6472", bg = "#db6472" }
+marker_marked   = { fg = "#5abfb5", bg = "#5abfb5" }
+marker_selected = { fg = "#d4a55a", bg = "#d4a55a" }
+
+count_copied   = { fg = "#161920", bg = "#84c48a" }
+count_cut      = { fg = "#161920", bg = "#db6472" }
+count_selected = { fg = "#161920", bg = "#d4a55a" }
+
+border_symbol = "│"
+border_style  = { fg = "#404263" }
+
+# : }}
+
+# : Indicator {{
+
+[indicator]
+parent  = { fg = "#8288a8", bg = "#1a1b2c" }
+current = { fg = "#161920", bg = "#6fa3e8", bold = true }
+preview = { fg = "#5c6180", bg = "#1a1b2c" }
+padding = { open = " ", close = "" }
+
+# : }}
+
+# : Tabs {{
+
+[tabs]
+active   = { fg = "#161920", bg = "#6fa3e8", bold = true }
+inactive = { fg = "#8288a8", bg = "#222336" }
+
+sep_inner = { open = "", close = "" }
+sep_outer = { open = "", close = "" }
+
+# : }}
+
+# : Mode {{
+# The *_alt style is the powerline transition segment:
+#   fg = mode bg color  → the arrow glyph takes that colour
+#   bg = bar bg colour  → sits on the dark bar behind the arrow
+
+[mode]
+normal_main = { fg = "#161920", bg = "#6fa3e8", bold = true }
+normal_alt  = { fg = "#6fa3e8", bg = "#1a1b2c" }
+
+select_main = { fg = "#161920", bg = "#84c48a", bold = true }
+select_alt  = { fg = "#84c48a", bg = "#1a1b2c" }
+
+unset_main = { fg = "#161920", bg = "#d4a55a", bold = true }
+unset_alt  = { fg = "#d4a55a", bg = "#1a1b2c" }
+
+# : }}
+
+# : Status bar {{
+# sep_left.close  =  between mode-alt and next segment
+# sep_right.open  =   entering the right-side highlight segment
+
+[status]
+overall = { fg = "#c8d0ea", bg = "#20222c" }
+
+sep_left  = { open = "", close = "" }
+sep_right = { open = "", close = "" }
+
+perm_sep   = { fg = "#404263" }
+perm_type  = { fg = "#6fa3e8" }
+perm_read  = { fg = "#d4a55a" }
+perm_write = { fg = "#db6472" }
+perm_exec  = { fg = "#84c48a" }
+
+progress_label  = { fg = "#e2e7fa", bold = true }
+progress_normal = { fg = "#161920", bg = "#6fa3e8" }
+progress_error  = { fg = "#e2e7fa", bg = "#db6472" }
+
+# : }}
+
+# : Confirm {{
+
+[confirm]
+border    = { fg = "#6fa3e8" }
+title     = { fg = "#6fa3e8" }
+body      = { fg = "#c8d0ea" }
+list      = { fg = "#c8d0ea" }
+btn_yes   = { fg = "#161920", bg = "#84c48a", bold = true }
+btn_no    = { fg = "#161920", bg = "#db6472", bold = true }
+btn_labels = ["  Yes  ", "  No  "]
+
+# : }}
+
+# : Spotter {{
+
+[spot]
+border   = { fg = "#6fa3e8" }
+title    = { fg = "#6fa3e8" }
+tbl_col  = { fg = "#5abfb5", bold = true }
+tbl_cell = { fg = "#e28b9e", bg = "#222336" }
+
+# : }}
+
+# : Pick {{
+
+[pick]
+border   = { fg = "#6fa3e8" }
+active   = { fg = "#e28b9e", bold = true }
+inactive = {}
+
+# : }}
+
+# : Input {{
+
+[input]
+border   = { fg = "#6fa3e8" }
+title    = {}
+value    = {}
+selected = { reversed = true }
+
+# : }}
+
+# : Completion {{
+
+[cmp]
+border   = { fg = "#6fa3e8" }
+active   = { fg = "#161920", bg = "#6fa3e8" }
+inactive = {}
+
+# : }}
+
+# : Tasks {{
+
+[tasks]
+border  = { fg = "#6fa3e8" }
+title   = {}
+hovered = { fg = "#e28b9e", bold = true }
+
+# : }}
+
+# : Which {{
+
+[which]
+cols            = 3
+mask            = { bg = "#1a1b2c" }
+cand            = { fg = "#5abfb5" }
+rest            = { fg = "#5c6180" }
+desc            = { fg = "#e28b9e" }
+separator       = "    "
+separator_style = { fg = "#2e3047" }
+
+# : }}
+
+# : Help {{
+
+[help]
+on      = { fg = "#5abfb5" }
+run     = { fg = "#e28b9e" }
+desc    = { fg = "#8288a8" }
+hovered = { reversed = true, bold = true }
+footer  = { fg = "#1a1b2c", bg = "#c8d0ea" }
+
+# : }}
+
+# : Notification {{
+
+[notify]
+title_info  = { fg = "#84c48a" }
+title_warn  = { fg = "#d4a55a" }
+title_error = { fg = "#db6472" }
+
+# : }}
+
+# : File-specific styles {{
+
+[filetype]
+rules = [
+  { mime = "image/*",                                                                                    fg = "#62c5cc" },
+  { mime = "{audio,video}/*",                                                                          fg = "#d4a55a" },
+  { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#d49872" },
+  { mime = "application/{pdf,doc,rtf,docx,odt}",                                                      fg = "#84c48a" },
+  { mime = "vfs/{absent,stale}",                                                                       fg = "#5c6180" },
+  { url = "*",  fg = "#c8d0ea" },
+  { url = "*/", fg = "#6fa3e8" },
+]
+
+# : }}
+
+# : Icons {{
+
+[icon]
+dirs = [
+  { name = ".config",     text = "", fg = "#e28b9e" },
+  { name = ".git",        text = "", fg = "#5abfb5" },
+  { name = ".github",     text = "", fg = "#6fa3e8" },
+  { name = ".npm",        text = "", fg = "#6fa3e8" },
+  { name = ".vscode",     text = "", fg = "#6fa3e8" },
+  { name = "Desktop",     text = "", fg = "#5abfb5" },
+  { name = "Development", text = "", fg = "#5abfb5" },
+  { name = "Documents",   text = "󱔗", fg = "#5abfb5" },
+  { name = "Downloads",   text = "", fg = "#5abfb5" },
+  { name = "Library",     text = "", fg = "#5abfb5" },
+  { name = "Movies",      text = "󰷝", fg = "#5abfb5" },
+  { name = "Music",       text = "", fg = "#5abfb5" },
+  { name = "Pictures",    text = "", fg = "#5abfb5" },
+  { name = "Public",      text = "", fg = "#5abfb5" },
+  { name = "Videos",      text = "", fg = "#5abfb5" },
+]
+
+conds = [
+  { if = "orphan", text = "", fg = "#c8d0ea" },
+  { if = "link",   text = "", fg = "#8288a8" },
+  { if = "block",  text = "", fg = "#d49872" },
+  { if = "char",   text = "", fg = "#d49872" },
+  { if = "fifo",   text = "", fg = "#d49872" },
+  { if = "sock",   text = "", fg = "#d49872" },
+  { if = "sticky", text = "", fg = "#d49872" },
+  { if = "dummy",  text = "", fg = "#db6472" },
+  { if = "dir",    text = "", fg = "#6fa3e8" },
+  { if = "exec",   text = "", fg = "#84c48a" },
+  { if = "!dir",   text = "", fg = "#c8d0ea" },
+]
+
+# : }}

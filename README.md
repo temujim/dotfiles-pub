@@ -12,7 +12,7 @@ consolidated copy so the whole stack can be pulled onto another Mac laptop.
 ```
 home/            .zshrc  .zprofile  .tmux.conf  .tmux-status.conf   (copy to ~)
 nvim/            init.lua + lazy-lock.json        (copy to ~/.config/nvim/)
-yazi/            keymap.toml + theme.toml         (copy to ~/.config/yazi/)
+yazi/            keymap.toml + theme.toml + flavors/  (copy to ~/.config/yazi/; 34 bundled themes)
 tmux/            resurrect save-strategy + helpers + scripts + LaunchAgent
 apps/claude/     settings.json + keybindings.json (copy to ~/.claude/)
 apps/local-bin/  launcher/profile-shim templates (@HOME@ = your home)
@@ -38,7 +38,7 @@ can't automate (font install, terminal import, plugin install, sign-ins).
   restore strategy that turns Hermes/Claude panes back into resumable commands).
 - zsh **vi-mode** (Esc = normal), fzf **Ctrl-R / Ctrl-T / Alt-C**, autosuggest **Right / Ctrl-F**.
 - nvim lead key **Space**; **Space e** file explorer, **Space mv** Markdown render toggle.
-- yazi file manager: `y`/`yy` cd-on-quit wrapper, `!` = drop to shell in CWD, all-white theme.
+- yazi file manager: `y`/`yy` cd-on-quit wrapper, `!` = drop to shell in CWD, flavor-based theme (default `allwhite`, 34 bundled in `yazi/flavors/`).
 - Claude Code **editorMode vim**, fullscreen TUI, opus model.
 
 ## Scope & security (read docs/SOURCES.md)
