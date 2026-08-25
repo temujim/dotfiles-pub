@@ -47,6 +47,20 @@ TPM + tmux-sensible/resurrect/continuum are git clones — NOT committed; instal
 | local-bin/fonttoggle | ~/.local/bin/fonttoggle (self-contained) |
 | local-bin/hermes-update-safe | ~/.local/bin/hermes-update-safe (profile-specific; review before use) |
 
+## apps/synergy/ (added 2026-08-25 by explicit user request)
+| Repo file | Source | Transform |
+|-----------|--------|-----------|
+| synergy-server.conf | ~/Library/Preferences/Synergy/synergy-server.conf | none (verbatim) |
+| synergy-rcmd-focus-remap.py | ~/.local/bin/synergy-rcmd-focus-remap.py | none (portable via $HOME) |
+| com.user.synergy-rcmd-focus-remap.plist.template | ~/Library/LaunchAgents/com.user.synergy-rcmd-focus-remap.plist | `~` → `@HOME@` (install-time sed) |
+| README.md | — | purpose, install, revert, diagnose |
+
+NOT committed from ~/Library/Preferences/Synergy/: `synergyCert.pem` (cert),
+`db.json` / `local.json` / `UISetting.json` (GUI state), `synergy.conf` (stale
+GUI 5-screen layout), `*.bak-*` (ignored). Watcher destination is **Left
+Control 0xE0** — the earlier 0xE4 (Right Control) caused a stuck-CTRL bug on the
+Linux client (Synergy double-emits right-control). See apps/synergy/README.md.
+
 ## terminal/
 | Repo file | Source | Notes |
 |-----------|--------|-------|
@@ -62,7 +76,7 @@ TPM + tmux-sensible/resurrect/continuum are git clones — NOT committed; instal
 ## What is NOT here (by design) and where it lives instead
 | Item | Reason | Where it lives |
 |------|--------|----------------|
-| macOS KEYBOARD remapping (hidutil / ByHost / leftcmd-backspace LA / Caps→Esc) | user instruction: sync separately | separate file (macos-keyboard-remapping skill / TAW §9) |
+| macOS KEYBOARD remapping (hidutil / ByHost / leftcmd-backspace LA / Caps→Esc) | user instruction: sync separately | separate file (macos-keyboard-remapping skill / TAW §9). The Synergy Right-CMD watcher also uses hidutil but is a distinct KVM integration — committed under `apps/synergy/` by explicit request 2026-08-25, not part of the personal keyboard layout. |
 | Hermes ~/.hermes, profile config.yaml, skins | provider/API secrets | per-machine; TAW §7 |
 | ~/.claude/.credentials.json | secrets | per-machine |
 | git identity (~/.gitconfig) | personal | docs/.gitconfig.example + set per machine |
