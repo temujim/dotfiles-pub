@@ -126,5 +126,10 @@ fi
 for log in "$HOME_DIR/Library/Logs/Synergy/synergy.log" "$HOME_DIR/Library/Logs/Synergy/synergy-server.log"; do
     [ -f "$log" ] && echo "  watcher tail target exists: $log"
 done
+if pgrep -f 'synergy-core server' >/dev/null; then
+    echo "  NOTE: a Synergy server is running in THIS session."
+    echo "        Restart it now so it loads the installed config/canonical cert:"
+    echo "        pkill -f 'synergy-core server'    # synergy-service auto-respawns it (~5 s)"
+fi
 echo
 echo "Done for profile ${HOME_DIR}. Repeat this command from each profile you use on this Mac."
