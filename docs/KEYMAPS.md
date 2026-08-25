@@ -109,7 +109,12 @@ Source: yazi/keymap.toml + yazi/theme.toml
 
 | Keys | Action |
 |------|--------|
-| `!` | drop into an interactive $SHELL in the current directory (ranger `S` equivalent); `exit`/Ctrl-D returns to yazi |
+| `!` / `S` | drop into an interactive $SHELL in the current directory (ranger `S` equivalent); `exit`/Ctrl-D returns to yazi |
+| `g e` / `g u` / `g o` / `g v` / `g p` / `g r` | ranger directory jumps: cd /etc, /usr, /opt, /var, /tmp, / |
+| `g n` / `<C-n>` | new tab in CWD (ranger gn / C-n) |
+| `g T` / `<S-Tab>` | previous tab (ranger gT / S-Tab) |
+| `<C-w>` | close current tab (ranger C-w) |
+| `c w` | rename hovered file (ranger cw) |
 | `c c` / `c d` / `c f` | copy full path / directory / file name to clipboard |
 | `;` / `:` | run a shell command (interactive / block-until-finished) |
 | `y` / `x` / `p` | yank-copy / yank-cut / paste |

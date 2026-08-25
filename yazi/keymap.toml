@@ -1,8 +1,50 @@
-# ~/.config/yazi/keymap.toml
-# Dropping to shell in CWD (ranger 'S' equivalent)
+# Yazi keymap.toml — ranger 1.9.4 keybinding port
+# ---------------------------------------------------------
+# Design per user rules:
+#   * Copy ranger default keybindings into yazi ONLY where the key is
+#     NOT already claimed by a yazi default binding (no conflict).
+#   * Where a key conflicts, yazi's default wins (append_keymap has
+#     LOWER priority than the built-in default keymap).
+#   * Explicit overrides (prepend_keymap):
+#     - S / ! = open an interactive shell in the current directory (ranger's `map S shell $SHELL`).
+# ------------------------------------------------------------
 
-[[mgr.prepend_keymap]]
-on   = "!"
-for  = "unix"
-run  = 'shell "$SHELL" --block'
-desc = "Open $SHELL here"
+[mgr]
+
+# --- Prepend (HIGHER priority than yazi defaults) --------------------
+# S / !: open a shell here
+#   ranger:  "map S shell $SHELL"
+#   yazi:    `shell --block $SHELL`  — sh -c expands $SHELL, yazi hides
+#            onto a secondary screen, returns when the shell exits.
+prepend_keymap = [
+	{ on = "S",            run = "shell --block $SHELL", desc = "Open a shell in the current directory" },
+	{ on = "!",            run = 'shell "$SHELL" --block', desc = "Open $SHELL here" },
+]
+
+# --- Append (LOWER priority than defaults; conflicts keep yazi) -----
+append_keymap = [
+
+	# ranger 'g' series directory jumps (macOS-valid targets only).
+	# Skipped ranger bindings NOT ported:
+	#   gd (cd /dev)    -> conflicts with yazi g,d = cd ~/Downloads
+	#   gt (tab_move)   -> conflicts with yazi g,t = plugin trash
+	#   gc (tab_close)  -> conflicts with yazi g,c = cd ~/.config
+	#   gl/gL/gR/*      -> ranger-internal (last dir, RANGERDIR, docs)
+	#   gi/gM/gm/gs     -> /run/media /mnt /media /srv (no macOS dirs)
+	{ on = [ "g", "e" ], run = "cd /etc",             desc = "cd to /etc (ranger ge)" },
+	{ on = [ "g", "u" ], run = "cd /usr",             desc = "cd to /usr (ranger gu)" },
+	{ on = [ "g", "o" ], run = "cd /opt",             desc = "cd to /opt (ranger go)" },
+	{ on = [ "g", "v" ], run = "cd /var",             desc = "cd to /var (ranger gv)" },
+	{ on = [ "g", "p" ], run = "cd /tmp",             desc = "cd to /tmp (ranger gp)" },
+	{ on = [ "g", "r" ], run = "cd /",                desc = "cd to /       (ranger gr)" },
+	{ on = [ "g", "n" ], run = "tab_create --current", desc = "New tab in CWD (ranger gn)" },
+	{ on = [ "g", "T" ], run = "tab_switch -1 --relative", desc = "Previous tab (ranger gT)" },
+
+	# ranger <C-n> tab_new / <C-w> tab_close.
+	{ on = "<C-n>",      run = "tab_create --current",         desc = "New tab in CWD (ranger C-n)" },
+	{ on = "<C-w>",      run = "tab_close",                    desc = "Close current tab (ranger C-w)" },
+	{ on = "<S-Tab>",    run = "tab_switch -1 --relative",     desc = "Previous tab (ranger S-TAB)" },
+
+	# ranger cw = rename (yazi [c, w] is unclaimed by the copy group).
+	{ on = [ "c", "w" ], run = "rename",                       desc = "Rename hovered file (ranger cw)" },
+]

@@ -21,7 +21,7 @@ Every file in this repo, where it was captured from on the source Mac
 ## yazi/ → ~/.config/yazi/
 | Repo file | Source | Notes |
 |-----------|--------|-------|
-| keymap.toml | ~/.config/yazi/keymap.toml | binds `!` → interactive $SHELL in CWD (ranger `S` equivalent) |
+| keymap.toml | ~/.config/yazi/keymap.toml | binds `!` and `S` → interactive $SHELL in CWD (ranger `S` equivalent) + ranger keybinding port (ge/gu/go/gv/gp/gr/gn/gT/C-n/C-w/cw) |
 | theme.toml | ~/.config/yazi/theme.toml | all-white: built-in light palette, `app.overall.bg = "white"` forced so it renders white regardless of terminal mode |
 
 ## tmux/

@@ -97,6 +97,16 @@ if [[ -o interactive ]]; then
   bindkey -M viins '^F' forward-char
 fi
 
+# Yazi wrapper: cd to current working directory on exit
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	command yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	command rm -f -- "$tmp"
+}
+
 # zsh-syntax-highlighting MUST be sourced last (after all widgets/keybindings).
 if [[ -o interactive && -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
   source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
