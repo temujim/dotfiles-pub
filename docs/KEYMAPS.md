@@ -128,8 +128,28 @@ light palette forced white regardless of terminal mode).
 
 ---
 
+## BROWSER TAB CYCLING  (Ctrl+Tab / Ctrl+Shift+Tab)
+Source: docs/BROWSER-TAB-CYCLING.md  (native macOS App Shortcuts via `defaults`, per-account)
+
+| Keys | Action |
+|------|--------|
+| Ctrl+Tab | next tab (Chrome/Edge/Brave/Arc/Opera/Vivaldi/Firefox: `Select Next Tab`; Safari: `Show Next Tab`) |
+| Ctrl+Shift+Tab | previous tab (`Select Previous Tab` / `Show Previous Tab`) |
+
+Mechanism: global `NSUserKeyEquivalents` (`defaults -g`) maps a combo to a menu-item
+title; macOS rebinds any app menu item with a matching title. Applied with
+`defaults write -g NSUserKeyEquivalents -dict-add ...`; NOT the System Settings panel.
+**Gotcha: relaunch the browser after applying** (running apps don't reload their menus).
+Replaces the built-in ⌘1/⌘2 for those items; Full Keyboard Access must be off.
+
+---
+
 ## Excluded on purpose
-THE macOS KEYBOARD REMAPPING layer (hidutil / ByHost modifier map /
+THE macOS HARDWARE KEYBOARD REMAPPING layer (hidutil / ByHost modifier map /
 leftcmd-backspace LaunchAgent / Caps→Esc) is intentionally NOT in this repo —
 it is synced from another file. See docs/CLI-INVENTORY.md for the full
 in-and-out of scope list.
+
+The **browser tab-cycling App-Shortcuts** layer above is separate and IS kept here:
+it is a portable `defaults`-driven override documented in docs/BROWSER-TAB-CYCLING.md
+(a distinct mechanism from the hidutil hardware remaps, not synced elsewhere).

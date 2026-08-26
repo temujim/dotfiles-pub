@@ -19,7 +19,7 @@ apps/local-bin/  launcher/profile-shim templates (@HOME@ = your home)
 apps/            brew-formulas.txt  brew-casks.txt
 terminal/        Basic.terminal     (importable Terminal.app profile)
 scripts/         install-fzf-release.sh  install.sh  verify.sh
-docs/            KEYMAPS.md  SETUP-ORDER.md  CLI-INVENTORY.md  SOURCES.md
+docs/            KEYMAPS.md  BROWSER-TAB-CYCLING.md  SETUP-ORDER.md  CLI-INVENTORY.md  SOURCES.md
 legacy/          system-vim .vimrc (kept, NOT installed by default)
 ```
 
@@ -40,11 +40,14 @@ can't automate (font install, terminal import, plugin install, sign-ins).
 - nvim lead key **Space**; **Space e** file explorer, **Space mv** Markdown render toggle.
 - yazi file manager: `y`/`yy` cd-on-quit wrapper, `!` = drop to shell in CWD, flavor-based theme (default `allwhite`, 34 bundled in `yazi/flavors/`).
 - Claude Code **editorMode vim**, fullscreen TUI, opus model.
+- **Ctrl+Tab / Ctrl+Shift+Tab browser tab cycling** (native App Shortcuts, no install): docs/BROWSER-TAB-CYCLING.md.
 
 ## Scope & security (read docs/SOURCES.md)
-- EXCLUDED on purpose: the **macOS keyboard remapping** layer (hidutil/ByHost/
+- EXCLUDED on purpose: the macOS **hardware keyboard remapping** layer (hidutil/ByHost/
   LeftCmd-Backspace/Caps→Esc) — it is synced from a separate file. Also excluded:
   Hermes profile configs & secrets, ~/.claude credentials, SSH/API keys, git identity.
+- KEPT here (portable, `defaults`-driven, no secrets): the Ctrl+Tab / Ctrl+Shift+Tab
+  browser tab-cycling App-Shortcut layer (docs/BROWSER-TAB-CYCLING.md).
 - Committed as @HOME@ templates so they install correctly under ANY account name.
 
 ## Status
