@@ -68,12 +68,25 @@ for f in init.lua lazy-lock.json; do
   if [[ "$DRY" -eq 1 ]]; then say "would install nvim/$f -> $dst"; else install_file "$src" "$dst"; fi
 done
 
-# ---- 2b. yazi (keymap + flavor-based theme) ----
-note "--- yazi config (keymap + theme + flavors) ---"
+# ---- 2b. yazi (keymap + flavor-based theme + plugins) ----
+note "--- yazi config (keymap + theme + flavors + plugins) ---"
 for f in keymap.toml theme.toml; do
   src="$REPO_DIR/yazi/$f"; dst="$TARGET_HOME/.config/yazi/$f"
   [[ -f "$src" ]] || continue
   if [[ "$DRY" -eq 1 ]]; then say "would install yazi/$f -> $dst"; else install_file "$src" "$dst"; fi
+done
+# plugins/ (custom yazi plugins like tab-parent)
+for d in "$REPO_DIR"/yazi/plugins/*.yazi; do
+  [[ -d "$d" ]] || continue
+  name="$(basename "$d")"
+  dst="$TARGET_HOME/.config/yazi/plugins/$name"
+  if [[ "$DRY" -eq 1 ]]; then
+    say "would install yazi/plugins/$name -> $dst"
+  else
+    mkdir -p "$dst"
+    cp -a "$d"/. "$dst"/
+    note "installed $dst"
+  fi
 done
 # flavors/ (all bundled yazi themes incl. custom allwhite)
 for d in "$REPO_DIR"/yazi/flavors/*.yazi; do

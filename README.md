@@ -12,7 +12,7 @@ consolidated copy so the whole stack can be pulled onto another Mac laptop.
 ```
 home/            .zshrc  .zprofile  .tmux.conf  .tmux-status.conf   (copy to ~)
 nvim/            init.lua + lazy-lock.json        (copy to ~/.config/nvim/)
-yazi/            keymap.toml + theme.toml + flavors/  (copy to ~/.config/yazi/; 34 bundled themes)
+yazi/            keymap.toml + theme.toml + flavors/ + plugins/ (copy to ~/.config/yazi/; 34 bundled themes + tab-parent plugin)
 tmux/            resurrect save-strategy + helpers + scripts + LaunchAgent
 apps/claude/     settings.json + keybindings.json (copy to ~/.claude/)
 apps/local-bin/  launcher/profile-shim templates (@HOME@ = your home)

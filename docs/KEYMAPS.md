@@ -110,6 +110,7 @@ Source: yazi/keymap.toml + yazi/theme.toml
 | Keys | Action |
 |------|--------|
 | `!` / `S` | drop into an interactive $SHELL in the current directory (ranger `S` equivalent); `exit`/Ctrl-D returns to yazi |
+| `t f` | open hovered file's parent directory in a new tab (and reveal/highlight file) — ideal from `s` (fd) search results |
 | `g e` / `g u` / `g o` / `g v` / `g p` / `g r` | ranger directory jumps: cd /etc, /usr, /opt, /var, /tmp, / |
 | `g n` / `<C-n>` | new tab in CWD (ranger gn / C-n) |
 | `g T` / `<S-Tab>` | previous tab (ranger gT / S-Tab) |

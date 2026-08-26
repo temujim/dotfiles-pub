@@ -21,7 +21,8 @@ Every file in this repo, where it was captured from on the source Mac
 ## yazi/ → ~/.config/yazi/
 | Repo file | Source | Notes |
 |-----------|--------|-------|
-| keymap.toml | ~/.config/yazi/keymap.toml | binds `!` and `S` → interactive $SHELL in CWD (ranger `S` equivalent) + ranger keybinding port (ge/gu/go/gv/gp/gr/gn/gT/C-n/C-w/cw) |
+| keymap.toml | ~/.config/yazi/keymap.toml | binds `!` and `S` → interactive $SHELL in CWD (ranger `S` equivalent) + `t f` (open hovered file location in new tab) + ranger keybinding port (ge/gu/go/gv/gp/gr/gn/gT/C-n/C-w/cw) |
+| plugins/tab-parent.yazi/main.lua | ~/.config/yazi/plugins/tab-parent.yazi/main.lua | sync plugin to create a new tab at hovered file parent URL and reveal file |
 | theme.toml | ~/.config/yazi/theme.toml | all-white: built-in light palette, `app.overall.bg = "white"` forced so it renders white regardless of terminal mode |
 
 ## tmux/

@@ -7,7 +7,9 @@
 #     LOWER priority than the built-in default keymap).
 #   * Explicit overrides (prepend_keymap):
 #     - S / ! = open an interactive shell in the current directory (ranger's `map S shell $SHELL`).
-# ------------------------------------------------------------
+#     - s     = search files by name via fd (guaranteed explicit binding, so
+#               it never depends on a default that could be shadowed).
+# ---------------------------------------------------------
 
 [mgr]
 
@@ -16,9 +18,13 @@
 #   ranger:  "map S shell $SHELL"
 #   yazi:    `shell --block $SHELL`  — sh -c expands $SHELL, yazi hides
 #            onto a secondary screen, returns when the shell exits.
+# s: guaranteed fd filename search (lowercase; default yazi `s` is already
+#    search --via=fd — this explicit binding makes it unconditional).
 prepend_keymap = [
 	{ on = "S",            run = "shell --block $SHELL", desc = "Open a shell in the current directory" },
 	{ on = "!",            run = 'shell "$SHELL" --block', desc = "Open $SHELL here" },
+	{ on = "s",            run = "search --via=fd",      desc = "Search files by name via fd" },
+	{ on = [ "t", "f" ],   run = "plugin tab-parent",    desc = "Open hovered file directory in new tab" },
 ]
 
 # --- Append (LOWER priority than defaults; conflicts keep yazi) -----
