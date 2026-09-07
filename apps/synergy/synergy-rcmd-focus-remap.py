@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 """Watch Synergy server logs and map Keychron Right CMD -> Left Control only while example-client holds focus.
 
+v3 changes (2026-09-07):
+- Periodic reconcile loop: every 5s the watcher re-asserts its intent through the
+  same read-modify-write path (a no-op when the array already matches). This makes
+  it self-healing against external full-array hidutil clears — e.g. the
+  macos-keymap.sh autostart/apply/rollback gate, which legitimately wipes the whole
+  UserKeyMapping when enforcing the external-keyboard login policy. Ownership is
+  now explicit: the watcher owns ONLY the Keychron-scoped entry; macos-keymap.sh
+  owns every other mapping.
+
 v2 changes (2026-08-26):
 - Multi-log: tails BOTH `~/Library/Logs/Synergy/synergy.log` (GUI-managed server, e.g. the
   profile-b profile) and `~/Library/Logs/Synergy/synergy-server.log` (CLI-launched server with
@@ -50,6 +59,8 @@ KEYCHRON_ENTRY = {
 
 LINUXCLIENT = "linuxclient"
 mac = "mac-main"  # canonical server screen name (informational; dest-based logic)
+
+RECONCILE_INTERVAL = 5.0  # seconds between intent re-asserts (v3 self-healing)
 
 
 def _hidutil_get() -> list[dict]:
@@ -158,8 +169,19 @@ def follow() -> None:
     set_mapping(mapped)
     write_state(dest or "unknown")
 
+    # v3: periodic reconcile. Any external full-array hidutil clear (macos-keymap
+    # autostart/rollback/apply, stock-reset scripts) can wipe the Keychron entry
+    # while this watcher's in-memory `mapped` flag stays unchanged — the event
+    # path would then never re-add it until the next screen switch. Every
+    # RECONCILE_INTERVAL seconds, re-assert intent through the same
+    # read-modify-write path (a no-op when the array already matches).
+    last_reconcile = time.monotonic()
     while True:
         time.sleep(0.15)
+        now = time.monotonic()
+        if now - last_reconcile >= RECONCILE_INTERVAL:
+            last_reconcile = now
+            set_mapping(dest == LINUXCLIENT)
         for path in LOG_CANDIDATES:
             if not path.exists():
                 continue
