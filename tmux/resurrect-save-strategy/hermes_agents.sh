@@ -78,7 +78,18 @@ def is_hermes_argv(argv):
 def is_claude_argv(argv):
     if not argv:
         return False
-    return exe_basename(argv) == 'claude' or any(os.path.basename(a) == 'claude' for a in argv[:3])
+    if exe_basename(argv) == 'claude' or any(os.path.basename(a) == 'claude' for a in argv[:3]):
+        return True
+    # Versioned binary: ~/.local/share/claude/versions/X.Y.Z (Mach-O) resolved from symlink
+    # e.g. ~/.local/share/claude/versions/2.1.286 --resume <uuid>
+    # basename is version number, not 'claude', so check path contains /claude/
+    for a in argv[:3]:
+        if '/claude/versions/' in a or '/.claude/' in a:
+            return True
+        # e.g. basename 2.1.286 with path containing claude
+        if re.fullmatch(r'\d+\.\d+\.\d+', os.path.basename(a)) and 'claude' in a.lower():
+            return True
+    return False
 
 
 def arg_value(argv, names):
@@ -169,12 +180,46 @@ def pane_cwd():
 
 # 1) If an exact Hermes/Claude resume command is already the real process,
 # normalize and keep it.
+# local patch 2026-09-25: a BARE `hermes --resume <sid>` argv (profile omitted)
+# is only re-saved bare when the session actually exists in the default-home
+# state.db. Otherwise resolve which profile DB holds the session and emit
+# `--profile <p>` — otherwise a restored pane looks in the default DB, prints
+# "Session not found", and boots an empty chat (/history shows nothing).
+# Rollback: cp hermes_agents.sh.bak-20260925 over this file.
+def default_db_has_session(sid):
+    db = home / '.hermes' / 'state.db'
+    if not db.exists():
+        return False
+    try:
+        con = sqlite3.connect(str(db))
+        row = con.execute('select 1 from sessions where id=?', (sid,)).fetchone()
+        con.close()
+    except Exception:
+        return False
+    return bool(row)
+
+
+def profile_holding_session(sid):
+    for db in sorted((home / '.hermes' / 'profiles').glob('*/state.db')):
+        try:
+            con = sqlite3.connect(str(db))
+            row = con.execute('select 1 from sessions where id=?', (sid,)).fetchone()
+            con.close()
+        except Exception:
+            continue
+        if row:
+            return db.parent.name
+    return None
+
+
 for _pid, _ppid, _start, cmd in desc:
     argv = parse_args(cmd)
     if is_hermes_argv(argv):
         sid = resume_from_argv(argv)
         if sid:
             profile = profile_from_argv(argv)
+            if profile is None and not default_db_has_session(sid):
+                profile = profile_holding_session(sid)
             parts = ['hermes']
             if profile:
                 parts += ['--profile', profile]
