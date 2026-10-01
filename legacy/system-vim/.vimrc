@@ -220,16 +220,14 @@ Plugin 'Yggdroot/indentLine'
 Plugin 'andymass/vim-matchup'
 
 " ----------------------------------------------------------
-" vim in db
+" vim in db — DB plugin plugins kept, legacy contents removed (load from
+" untracked local config, e.g. ~/.vim/local config, if needed)
 Plugin 'tpope/legacy-db'
 
 
 " DB plugin ui
 Plugin 'kristijanhusak/legacy-db-ui'
-legacy block = {
-            \ 'DB-conn': '[removed]'
-            \ }
-" thse are not working
+" legacy block removed — (content purged)
 let g:db_ui_use_nerd_fonts=1
 let g:db_ui_show_database_icon=1 
 " let g:db_ui_show_database_icon=1 
