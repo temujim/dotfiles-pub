@@ -8,7 +8,7 @@
 #   bash ~/dotfiles-mac/apps/synergy/install-synergy-profile.sh
 #
 # What it does (idempotent):
-#   1. Installs the canonical 2-screen server config ( mac-main<-> linuxclient,
+#   1. Installs the canonical 2-screen server config (mac-main <-> linuxclient,
 #      alt<->super swap + Ctrl+Alt+Q/W switch hotkeys) at ~/Library/Preferences/Synergy/synergy-server.conf
 #   2. Installs the Right-CMD -> Left-Control focus watcher (v2, multi-log, preserves
 #      other hidutil mappings) at ~/.local/bin/synergy-rcmd-focus-remap.py
@@ -92,7 +92,7 @@ if [ ! -f "$LAUNCH_AGENTS/com.symless.synergy3.plist" ]; then
     echo "   NOTE: Synergy GUI auto-start agent (com.symless.synergy3.plist) not present."
     echo "         Open the Synergy app once (open -a Synergy) so it registers auto-start for this profile,"
     echo "         or start the server manually with:"
-    echo "         /Applications/Synergy.app/Contents/MacOS/synergy-core server -f --no-tray --ipc -c $conf_target --name  mac-main--enable-crypto --tls-cert $SYNERGY_PREFS/synergyCert.pem --debug INFO --address 0.0.0.0:24800"
+    echo "         /Applications/Synergy.app/Contents/MacOS/synergy-core server -f --no-tray --ipc -c $conf_target --name mac-main --enable-crypto --tls-cert $SYNERGY_PREFS/synergyCert.pem --debug INFO --address 0.0.0.0:24800"
 fi
 
 # ---- verification ----
