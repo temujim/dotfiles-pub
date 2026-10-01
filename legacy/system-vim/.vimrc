@@ -227,7 +227,7 @@ Plugin 'tpope/legacy-db'
 
 " DB plugin ui
 Plugin 'kristijanhusak/legacy-db-ui'
-" legacy block removed — (content purged)
+" legacy block removed — was legacy content — now untracked
 let g:db_ui_use_nerd_fonts=1
 let g:db_ui_show_database_icon=1 
 " let g:db_ui_show_database_icon=1 
