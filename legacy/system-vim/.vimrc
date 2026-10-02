@@ -71,7 +71,6 @@ let g:ctrlp_working_path_mode = 0
 " let g:jedi#popup_on_dot = 0
 
 
-
 "-- Vim.WIki
 Plugin 'vimwiki/vimwiki'
 let g:vimwiki_list = [{'path': '~/vimwiki/',
@@ -79,8 +78,6 @@ let g:vimwiki_list = [{'path': '~/vimwiki/',
 
 " Real-time markdown preview
 " Plugin 'iamcco/markdown-preview.vim'
-
-
 
 
 "-- YouCompleteMe
@@ -219,45 +216,6 @@ Plugin 'Yggdroot/indentLine'
 " FOR testing, navigation on blocks
 Plugin 'andymass/vim-matchup'
 
-" ----------------------------------------------------------
-" vim in db — DB plugin plugins kept, legacy contents removed (load from
-" untracked local config, e.g. ~/.vim/local config, if needed)
-Plugin 'tpope/legacy-db'
-
-
-" DB plugin ui
-Plugin 'kristijanhusak/legacy-db-ui'
-" legacy block removed — was legacy content — now untracked
-let g:db_ui_use_nerd_fonts=1
-let g:db_ui_show_database_icon=1 
-" let g:db_ui_show_database_icon=1 
-
-" plugin mapping
-nmap <Leader>u <Plug>(UI_DeleteLine)
-
-
-" ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-" for autocomplete
-" not fully working
-Plugin 'kristijanhusak/legacy-db-completion'
-
-" possible this is no longer relevant
-Plugin 'vim-scripts/legacy-ext.vim'
-
-" For built in omnifunc
-autocmd FileType sql setlocal omnifunc=legacy_db_completion#omni
-
-" Source is automatically added, you just need to include it in the chain complete list
-let g:completion_chain_complete_list = {
-    \   'sql': [
-    \    {'complete_items': ['legacy-db-completion']},
-    \   ],
-    \ }
-" Make sure `substring` is part of this list. Other items are optional for this completion source
-let g:completion_matching_strategy_list = ['exact', 'substring']
-" Useful if there's a lot of camel case items
-let g:completion_matching_ignore_case = 1
-" ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 " Asynchonouse Syntax Chcker
 " Plugin 'w0rp/ale'  "disabled since I did not find this useful
@@ -371,7 +329,6 @@ augroup cursorline
 augroup end
 
 
-
 """"""""""""""""""""""""""""""""""""""""""""""}}}
 
 "::::==-- Navigation --==:::: {{{ 
@@ -415,7 +372,6 @@ nnoremap k gk
 
 " Map Leader key to spacebar
 "
-
 
 
 " NERDtree mapping, to go to file location
@@ -483,7 +439,6 @@ command! CDC lcd %:p:h
 " nnoremap <buffer> <silent> <localleader>b :PythonSetBreak<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 
 " quicker global copy-pasting to Vim to windows
@@ -595,10 +550,6 @@ set ttymouse=sgr
 " let g:kite_next_placeholder='<C-J>'
 
 
-
-
-
-
 """"""""""""""""""""""""""""""""""""""""""""""}}}
 
 "::::==-- Split --==:::: {{{
@@ -705,8 +656,6 @@ augroup XML
     autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
 augroup END
 " https://stackoverflow.com/questions/32154285/folding-expanding-and-colapsing-xml-tags-in-vim-xml-parsing
-
-
 
 
 """""""""""""""""""""""""""""""""""""""""""""}}}
