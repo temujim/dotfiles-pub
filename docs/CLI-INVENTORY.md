@@ -49,7 +49,7 @@ versioned installs are rebuilt on target:
 | claude -> ~/.local/share/claude/versions/2.1.226 | symlink to versioned install | no - native install |
 | cua-driver | symlink to /Applications/CuaDriver.app | no - app install |
 | hermes | launcher | yes (template) |
-| profile shims | profile shims | yes (templates) |
+| profile shims (local Hermes profiles) | launchers | no — excluded from public mirror |
 | hermes-acp | ACP launcher | yes (template) |
 | fonttoggle | Terminal font shrink/restore | yes |
 | hermes-update-safe | update utility (patch-aware) | yes (profile-specific; review before use) |
@@ -73,7 +73,7 @@ versioned installs are rebuilt on target:
 ## Explicitly NOT in this repo (security / per-machine / out of scope)
 - macOS keyboard REMAPPING layer (hidutil / ByHost / com.user.leftcmd-backspace
   LaunchAgent / Caps->Esc) - intentionally excluded; synced elsewhere.
-- Hermes profile configs (profile config.yaml contain provider/API keys),
+- Hermes profile configs (per-profile config.yaml files contain provider/API keys),
   ~/.hermes, .env, auth.json, state.db, sessions, memories, history.
 - ~/.claude/.credentials.json (secrets).
 - git identity (see .gitconfig.example in docs/ - set per machine).

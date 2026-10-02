@@ -77,7 +77,7 @@ for l in hermes fonttoggle; do
 done
 # Launchers this repo installs (scan only these, so real-machine binaries like
 # fzf/claude/cua-driver in ~/.local/bin are not mis-flagged as bad launchers).
-REPO_LAUNCHERS="hermes local example profile-x profile-y profile-z hermes-acp fonttoggle hermes-update-safe"
+REPO_LAUNCHERS="hermes hermes-acp fonttoggle hermes-update-safe"
 for l in $REPO_LAUNCHERS; do
   [[ -f "$TARGET_HOME/.local/bin/$l" ]] || { bad "launcher $l missing"; continue; }
   if bash -n "$TARGET_HOME/.local/bin/$l" 2>/dev/null; then :; else bad "bash -n of launcher $l"; fi

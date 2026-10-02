@@ -82,7 +82,7 @@ Hermes checkout, venv, profile homes and all provider keys/skin state are per
 machine and NOT in this repo (secrets!). Recreate config per the TAW §7 runbook;
 re-enter API keys; re-apply local patches only with their markers + rollback.
 Local launchers (apps/local-bin/*) are templates — install.sh rewrites @HOME@
-to your home; the profile shims (local, example, ...) point at your Hermes.
+to your home; the profile shims (not shipped in this mirror) point at your Hermes.
 
 ## 6. Final acceptance (run verify.sh after install)
 - zsh -n ~/.zshrc
