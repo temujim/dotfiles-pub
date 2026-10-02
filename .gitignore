@@ -15,3 +15,4 @@ state.db
 
 # Build/OS metadata (not used here, but harmless to ignore)
 __pycache__/
+.private-blocklist*

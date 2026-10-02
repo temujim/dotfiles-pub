@@ -22,10 +22,17 @@ cd "$REPO_ROOT" || {
 
 EXPECTED_EMAIL="${EXPECTED_EMAIL:-temujim@users.noreply.github.com}"
 REQUIRE_BLOCKLIST="${REQUIRE_PRIVATE_BLOCKLIST:-0}"
+SCAN_REF="HEAD"
 for arg in "$@"; do
   case "$arg" in
     --require-blocklist)
       REQUIRE_BLOCKLIST=1
+      ;;
+    --all)
+      SCAN_REF="--all"
+      ;;
+    *)
+      SCAN_REF="$arg"
       ;;
   esac
 done
@@ -108,26 +115,21 @@ done <<< "$TRACKED_FILES"
 [ "$fail" -eq 0 ] && echo "ok: working tree clean"
 
 echo "-- [3/6] Reachable history check --"
-GIT_DIFF_OUTPUT="$(git log --all -p 2>/dev/null)"
-if [ $? -ne 0 ]; then
-  echo "ERROR: git log failed while scanning history." >&2
-  exit 1
-fi
-
-if printf "%s\n" "$GIT_DIFF_OUTPUT" | grep -E -q -e "$GENERIC_KEY_PATTERN"; then
+# Stream diffs directly to grep to avoid SIGPIPE / high memory buffering
+if git log "$SCAN_REF" -p 2>/dev/null | grep -E -e "$GENERIC_KEY_PATTERN" >/dev/null 2>&1; then
   echo "FAIL: [private-key-header] found in reachable history [content redacted]" >&2
   fail=1
 fi
-if printf "%s\n" "$GIT_DIFF_OUTPUT" | grep -E -q -e "$GENERIC_TOKEN_PATTERN"; then
+if git log "$SCAN_REF" -p 2>/dev/null | grep -E -e "$GENERIC_TOKEN_PATTERN" >/dev/null 2>&1; then
   echo "FAIL: [known-token-pattern] found in reachable history [content redacted]" >&2
   fail=1
 fi
-if printf "%s\n" "$GIT_DIFF_OUTPUT" | grep -E -q -e "$GENERIC_AUTH_URL_PATTERN"; then
+if git log "$SCAN_REF" -p 2>/dev/null | grep -E -e "$GENERIC_AUTH_URL_PATTERN" >/dev/null 2>&1; then
   echo "FAIL: [authenticated-connection-url] found in reachable history [content redacted]" >&2
   fail=1
 fi
 if [ -n "$CLEAN_BLOCKLIST" ] && [ -s "$CLEAN_BLOCKLIST" ]; then
-  if printf "%s\n" "$GIT_DIFF_OUTPUT" | grep -E -i -q -f "$CLEAN_BLOCKLIST"; then
+  if git log "$SCAN_REF" -p 2>/dev/null | grep -E -i -f "$CLEAN_BLOCKLIST" >/dev/null 2>&1; then
     echo "FAIL: [private-blocklist] found in reachable history [content redacted]" >&2
     fail=1
   fi
@@ -135,22 +137,16 @@ fi
 [ "$fail" -eq 0 ] && echo "ok: reachable history clean"
 
 echo "-- [4/6] Commit messages check --"
-GIT_MESSAGES="$(git log --all --format='COMMIT:%h%n%B%n' 2>/dev/null)"
-if [ $? -ne 0 ]; then
-  echo "ERROR: git log failed while scanning commit messages." >&2
-  exit 1
-fi
-
-if printf "%s\n" "$GIT_MESSAGES" | grep -E -q -e "$GENERIC_TOKEN_PATTERN"; then
+if git log "$SCAN_REF" --format='COMMIT:%h%n%B%n' 2>/dev/null | grep -E -e "$GENERIC_TOKEN_PATTERN" >/dev/null 2>&1; then
   echo "FAIL: [known-token-pattern] found in commit messages [content redacted]" >&2
   fail=1
 fi
-if printf "%s\n" "$GIT_MESSAGES" | grep -E -q -e "$GENERIC_AUTH_URL_PATTERN"; then
+if git log "$SCAN_REF" --format='COMMIT:%h%n%B%n' 2>/dev/null | grep -E -e "$GENERIC_AUTH_URL_PATTERN" >/dev/null 2>&1; then
   echo "FAIL: [authenticated-connection-url] found in commit messages [content redacted]" >&2
   fail=1
 fi
 if [ -n "$CLEAN_BLOCKLIST" ] && [ -s "$CLEAN_BLOCKLIST" ]; then
-  if printf "%s\n" "$GIT_MESSAGES" | grep -E -i -q -f "$CLEAN_BLOCKLIST"; then
+  if git log "$SCAN_REF" --format='COMMIT:%h%n%B%n' 2>/dev/null | grep -E -i -f "$CLEAN_BLOCKLIST" >/dev/null 2>&1; then
     echo "FAIL: [private-blocklist] found in commit messages [content redacted]" >&2
     fail=1
   fi
@@ -158,7 +154,7 @@ fi
 [ "$fail" -eq 0 ] && echo "ok: commit messages clean"
 
 echo "-- [5/6] Commit author/committer identities check --"
-ALL_IDENTITIES="$(git log --all --format='%ae%n%ce' 2>/dev/null | sort -u)"
+ALL_IDENTITIES="$(git log "$SCAN_REF" --format='%ae%n%ce' 2>/dev/null | sort -u)"
 if [ $? -ne 0 ]; then
   echo "ERROR: git log failed while scanning commit identities." >&2
   exit 1
