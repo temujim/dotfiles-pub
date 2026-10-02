@@ -86,7 +86,7 @@ Linux client (Synergy double-emits right-control). See apps/synergy/README.md.
 | fzf binary, claude binary, cua-driver | binaries/versioned installs | rebuilt on target (scripts/install-fzf-release.sh / native installers) |
 
 ## Cross-reference into the PrivateVault second brain
-The authoritative prose spec lives in the PrivateVault vault (`~/vault/04 Resources/Agentic Workflow/Titan Agentic Workflow.md`) with its porting companion
+The authoritative prose spec lives in the PrivateVault vault (`~/vault/docs/workflow.md`) with its porting companion
 (.../Titan Agentic Workflow - macOS Account Porting and Drift Review.md) and
 skill `taw-macos-porting`. This repo is the executable incarnation: it holds the
 actual current config files that TAW's appendix A snapshots. When the two drift,

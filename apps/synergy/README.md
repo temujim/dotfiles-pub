@@ -126,7 +126,7 @@ ssh user@host.example 'DISPLAY=:0 nohup timeout 15 xinput test-xi2 --root 3 > /t
 pkill -f 'synergy-core server'   # synergy-service auto-respawns it (~5 s)
 sleep 8
 tail ~/Library/Logs/Synergy/synergy.log          # GUI server log (or synergy-server.log for CLI)
-lsof -nP -iTCP:24800                              # want one ESTABLISHED 192.0.2.10 -> 192.0.2.XXX.* pair
+lsof -nP -iTCP:24800                              # want one ESTABLISHED 192.0.2.10 -> 192.0.2.x* pair
 ```
 If the server log repeats `accepted secure socket` → `new client disconnected` with **no**
 `client "<name>" has connected` line, the peer is reconnect-flapping (often a TLS cert
