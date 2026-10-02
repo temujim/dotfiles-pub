@@ -39,7 +39,7 @@ removes just that entry. Left CMD is never touched.
 
 v2 changes:
 - **Multi-log** — tails BOTH `~/Library/Logs/Synergy/synergy.log` (GUI-managed server, e.g.
-  the profile-b profile) and `~/Library/Logs/Synergy/synergy-server.log` (CLI-launched server,
+  a profile) and `~/Library/Logs/Synergy/synergy-server.log` (CLI-launched server,
   e.g. the user profile). A GUI server logs to `synergy.log`; a CLI server launched with
   `--config .../synergy-server.conf` logs to `synergy-server.log`. v1 tailed only
   `synergy-server.log` and was deaf under GUI-managed profiles.
@@ -56,7 +56,7 @@ Why not client-side xmodmap: the Synergy server collapses Left/Right Command int
 before transmission (both arrive as `Alt_L` under `super = alt`), so the client never sees a
 distinct right-command event.
 
-## Seamless across macOS profiles (user, profile-b, profile-c)
+## Seamless across macOS profiles (profile-a, profile-b, profile-c)
 
 Synergy runs per logged-in user on this Mac — each login runs its own server. Switching
 accounts must still present the same KVM behavior. Two things make that possible:
